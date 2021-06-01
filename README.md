@@ -68,3 +68,37 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Thanks for the original Author
+Here we have to thank Karl Hadwen on his really great job for building the project as a reference for everybody and you can find the original project in the following GitHub: https://github.com/karlhadwen/instagram link.
+
+## Enhancements And Fixed Bugs
+### Major
+1. In useAuthListener: make the listener to return both user account/auth user and the user profile at the same time, to reduce database accessing.
+Therefore I deleted the use-user hook.
+
+2. Create a ConditionaldRedirectRoute.js to redirect based on condition paramter and I used it to redirect to dashboard componenet from both login and signout componenets in case of the user is already looged in.
+
+3. Solving the issue that has the follwoing scenario:
+    After success sign up, and in the dashboard if the user try to follow a person from the suggested list, the timeline will not be re-renderd.
+    Along with that I did some changes to be sure that the same thing will work if the user toggle follow/unfollow button in a visited profile and then click on home icon in the main header to return back to his dashboard.
+    
+    below is a list for the files that have been changed for fixing the bug:
+        - pages/sign-up.js
+        - pages/dashboard.js
+        - components/header.js
+        - components/timeline.js
+        - post/add-comment.js
+        - sidebar/index.js
+        - sidebar/suggestions.js
+        - sidebar/suggested-profile.js
+
+### Minor
+1. Adding infiinet scroll feature to the timeline.js component.  
+2. Rename some methods in firebase.js in service folder.
+3. Rename some methods that called from useEffects in some compoenents.
+4. Rename the returned values from use-auth-listener inside hooks folder. 
+5. Adding global-app-actions.js inside services folder to hold all common actions that could be shred beteween multiple componenets.
+6. Remove the toggleFollow function from firebase.js in service folder. 
+
+
