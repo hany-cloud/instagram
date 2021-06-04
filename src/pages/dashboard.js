@@ -4,11 +4,10 @@ import Header from "../components/header";
 import Timeline from "../components/timeline";
 import Sidebar from "../components/sidebar";
 import UserContext from '../context/user';
-import { getFollowedUsersPhotosForUser, getUserByUserId } from '../services/firebase';
+import { getFollowedUsersPhotosForUser } from '../services/firebase';
 
-export default function Dashboard(props) {
-    const { authUser, userDoc } = useContext(UserContext);
-    const [loggedInUser, setLoggedInUser] = useState(userDoc);
+export default function Dashboard() {
+    const { userDoc: loggedInUser } = useContext(UserContext);
     const [photos, setPhotos] = useState(null);
 
     const setTimelinePhotosInState = async () => {
@@ -24,31 +23,16 @@ export default function Dashboard(props) {
         }
     }
 
-    // unconditional side effect after each render to set the page title 
     useEffect(() => {
+        setTimelinePhotosInState(); // this will makes Timeline component to re-render
+    }, [loggedInUser?.userId]);
+
+    // unconditional side effect after each render for dashboard component
+    useEffect(() => {
+        // set the page title
         document.title = 'Instagram';
     });
     
-    useEffect(() => {
-        // set logged in user in state if it is not exist (after sign up) 
-        async function setUserInState(userId) {
-            if(!loggedInUser || !loggedInUser?.userId) {
-                const [user] = await getUserByUserId(userId);  
-            
-                // Sidebar component will render 
-                setLoggedInUser(user);
-            }            
-        }
-
-        if (authUser?.uid) {
-            setUserInState(authUser?.uid); // this will makes Sidebar component to re-render
-        }
-    }, [props, authUser?.uid]);
-
-    useEffect(() => {
-        setTimelinePhotosInState(); // this will makes Timeline component to re-render
-    }, [authUser?.uid, loggedInUser?.userId]);
-
     return (
         <div className="bg-gray-background">
             <Header />
@@ -60,7 +44,7 @@ export default function Dashboard(props) {
                         <Timeline photos={photos} />
                     )}
                 </div>
-                <Sidebar loggedInUser={loggedInUser|| {}} setTimelinePhotos={setTimelinePhotosInState} />
+                <Sidebar loggedInUser={loggedInUser || {}} setTimelinePhotos={setTimelinePhotosInState} />
             </div>
         </div>
     );

@@ -1,10 +1,11 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Skeleton from 'react-loading-skeleton';
 import { isUserFollowingProfile } from '../../services/firebase';
 import { handleToggleFollowAction } from '../../services/global-app-actions';
 import { DEFAULT_IMAGE_PATH } from '../../constants/paths';
+import UserContext from '../../context/user';
 
 export default function Header({
     photosCount,
@@ -17,9 +18,11 @@ export default function Header({
         followers,
         following,
         username: profileUsername
-    },
-    loggedInUser
+    }
 }) {
+
+    const { userDoc: loggedInUser } = useContext(UserContext);
+
     const [isFollowingProfile, setIsFollowingProfile] = useState(null);
 
     const activeBtnFollow = loggedInUser?.userId && loggedInUser?.userId !== profileUserId;
@@ -121,6 +124,5 @@ Header.propTypes = {
         username: PropTypes.string,
         followers: PropTypes.array,
         following: PropTypes.array
-    }).isRequired,
-    loggedInUser: PropTypes.object
+    }).isRequired
 };

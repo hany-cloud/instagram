@@ -1,12 +1,15 @@
 import { useState, useContext, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import FirebaseContext from '../context/firebase';
+import UserContext from '../context/user';
 import * as ROUTES from '../constants/routes';
 import { doesUsernameExist } from '../services/firebase';
 
 export default function SignUp() {
-  const history = useHistory();
   const { firebase } = useContext(FirebaseContext);
+  const { setUserDoc } = useContext(UserContext);
+
+  const history = useHistory();
 
   const [username, setUsername] = useState('');
   const [fullName, setFullName] = useState('');
@@ -43,17 +46,19 @@ export default function SignUp() {
           dateCreated: Date.now()
         }
 
-        // firebase to create sign up user collection (create a document) from signUpUserDoc
+        // firebase to create sign up user collection (create a document) from signUpUser
         await firebase
           .firestore()
           .collection('users')
-          .add(signUpUser);
+          .add(signUpUser)
+          .then(function (docRef) {
+            // set the new signed up user in the context  
+            setUserDoc({ ...signUpUser, docId: docRef.id });
+          });
 
         // redirect to dashboard  
-        history.push({
-          pathname: ROUTES.DASHBOARD,
-          state: { user: signUpUser }
-        }); 
+        history.push(ROUTES.DASHBOARD);
+
       } catch (error) {
         setFullName('');
         setEmailAddress('');

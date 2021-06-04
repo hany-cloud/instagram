@@ -9,7 +9,7 @@ export default function useAuthListener() {
 
   useEffect(() => {
     const setUserDocInStateByUserId = async (userId) => {
-      const [activeUser] = await getUserByUserId(userId); // from firestore
+      const [activeUser] = await getUserByUserId(userId); // from firestore   
       setUserDoc(activeUser || {});
     }
 
@@ -35,5 +35,5 @@ export default function useAuthListener() {
   // returns 
   // authUser: Firebase Authintication user 
   // userDoc: Firestore users document 
-  return { authUser, userDoc };
+  return { authUser, userDoc, setUserDoc };
 }

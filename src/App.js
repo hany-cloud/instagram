@@ -12,7 +12,7 @@ const Profile = lazy(() => import('./pages/profile'));
 const NotFound = lazy(() => import('./pages/not-found'));
 
 function App() {
-  const { authUser, userDoc } = useAuthListener();
+  const { authUser, userDoc, setUserDoc } = useAuthListener();
 
   const isUserLoggedIn = () => {
     if (authUser) return true;
@@ -20,7 +20,7 @@ function App() {
   }
 
   return (
-    <UserContext.Provider value={{ authUser, userDoc }}>
+    <UserContext.Provider value={{ authUser, userDoc, setUserDoc }}>
       <Router>
         <Suspense fallback={<p>Loading ... </p>}>
           <Switch>

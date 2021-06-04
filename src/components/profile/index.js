@@ -4,7 +4,7 @@ import Header from './header';
 import Photos from './photos';
 import { getUserPhotosByUserId } from '../../services/firebase';
 
-export default function Profile({ user, loggedInUser }) {
+export default function Profile({ user }) {
     const reducer = (state, newState) => ({ ...state, ...newState });
     const initialState = {
         profile: {},
@@ -34,18 +34,11 @@ export default function Profile({ user, loggedInUser }) {
 
     return (
         <>
-            {/* <Header
-                photosCount={photosCollection ? photosCollection.length : 0}
-                profile={profile}
-                followerCount={followerCount}
-                setFollowerCount={dispatch}
-            /> */}
             <Header
                 photosCount={photosCollection ? photosCollection.length : 0}
                 followerCount={followerCount}
                 setFollowerCount={setFollowerCount}
-                profile={profile} 
-                loggedInUser={loggedInUser}               
+                profile={profile}             
             />
             <Photos photos={photosCollection} />
         </>
@@ -53,7 +46,6 @@ export default function Profile({ user, loggedInUser }) {
 }
 
 Profile.propTypes = {
-    loggedInUser: PropTypes.object,
     user: PropTypes.shape({
         dateCreated: PropTypes.number,
         emailAddress: PropTypes.string,
