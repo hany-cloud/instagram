@@ -93,6 +93,9 @@ Therefore I deleted the use-user hook.
         - sidebar/suggestions.js
         - sidebar/suggested-profile.js
 
+4. Fixed the sorting for followed users photos in pages/dashboard.js file.
+ 
+
 ### Minor
 1. Adding infiinet scroll feature to the timeline.js component.  
 2. Rename some methods in firebase.js in service folder.
