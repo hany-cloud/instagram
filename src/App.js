@@ -4,6 +4,7 @@ import * as ROUTES from './constants/routes';
 import useAuthListener from "./hooks/use-auth-listener";
 import UserContext from './context/user';
 import ConditionaldRedirectRoute from './helpers/conditional-redirect-route';
+import ProtectedRoute from './helpers/protected-route.js';
 
 const Login = lazy(() => import('./pages/login'));
 const SignUp = lazy(() => import('./pages/sign-up'));
@@ -36,12 +37,10 @@ function App() {
               
             <Route path={ROUTES.PROFILE} component={Profile} />
 
-            <Route exact path={ROUTES.DASHBOARD} component={Dashboard} />
-            {/* No need to protect the dashboard, since the componenets that are used inside the dashboard are handling 
-                the sign out user status. */}
-            {/* <ProtectedRoute user={authUser} path={ROUTES.DASHBOARD} exact>
+            {/* <Route exact path={ROUTES.DASHBOARD} component={Dashboard} /> */}
+            <ProtectedRoute user={authUser} path={ROUTES.DASHBOARD} exact>
               <Dashboard />
-            </ProtectedRoute> */}
+            </ProtectedRoute>
 
             <Route component={NotFound} />
           </Switch>
