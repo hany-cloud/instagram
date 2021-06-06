@@ -1,6 +1,6 @@
 import { firebase, FieldValue } from '../lib/firebase';
 
-const pageSize = 4;
+const PAGE_SIZE = 4;
 
 export async function doesUsernameExist(username) {
   const result = await firebase
@@ -148,7 +148,7 @@ export async function getFollowedUsersPhotosForUserByPage(forUserId, followedUse
     .where('userId', 'in', followedUserIds)
     .orderBy('dateCreated')
     .startAfter(latestDoc || 0)
-    .limit(pageSize)
+    .limit(PAGE_SIZE)
     .get();
 
   if(result.empty) {

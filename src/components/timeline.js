@@ -16,13 +16,13 @@ export default function Timeline({ loggedInUserId, loggedInUserFollowing }) {
     const [displayedPhotos, setDisplayedPhotos] = useState([]);
 
     // setup the infinite scroll 
-    const moreDataPerScrollCount = 2;
+    const DISPLAYED_PHOTOS_LENGTH = 2;
 
     const [latestDoc, setLatestDoc] = useState(null);
 
     const [count, setCount] = useState({
         prev: 0,
-        next: moreDataPerScrollCount
+        next: DISPLAYED_PHOTOS_LENGTH
     });
 
     const [hasMore, setHasMore] = useState(true);
@@ -38,8 +38,8 @@ export default function Timeline({ loggedInUserId, loggedInUserFollowing }) {
             }
         } else {
             // show more data from the local variable
-            setDisplayedPhotos(displayedPhotos.concat(followedUserPhotos?.slice(count.prev + moreDataPerScrollCount, count.next + moreDataPerScrollCount)));
-            setCount((prevState) => ({ prev: prevState.prev + moreDataPerScrollCount, next: prevState.next + moreDataPerScrollCount }))
+            setDisplayedPhotos(displayedPhotos.concat(followedUserPhotos?.slice(count.prev + DISPLAYED_PHOTOS_LENGTH, count.next + DISPLAYED_PHOTOS_LENGTH)));
+            setCount((prevState) => ({ prev: prevState.prev + DISPLAYED_PHOTOS_LENGTH, next: prevState.next + DISPLAYED_PHOTOS_LENGTH }))
         }
     }
 
@@ -60,9 +60,9 @@ export default function Timeline({ loggedInUserId, loggedInUserFollowing }) {
                 setDisplayedPhotos(allPhotos.slice(count.prev, count.next));
             } else {
                 const start = displayedPhotos.length;
-                const end = start + moreDataPerScrollCount;
+                const end = start + DISPLAYED_PHOTOS_LENGTH;
                 setDisplayedPhotos(displayedPhotos.concat(allPhotos.slice(start, end)));
-                setCount({ prev: start + moreDataPerScrollCount, next: end + moreDataPerScrollCount });
+                setCount({ prev: start + DISPLAYED_PHOTOS_LENGTH, next: end + DISPLAYED_PHOTOS_LENGTH });
             }
         }
     };
