@@ -7,6 +7,14 @@ export default function useAuthListener() {
   const [userDoc, setUserDoc] = useState('');
   const { firebase } = useContext(FirebaseContext);
 
+  const setUserData = async (user) => {
+    setUserDoc(user);
+  } 
+
+  const setUserFollowing = async (follwoingArray) => {
+    setUserDoc( {...userDoc, following: follwoingArray} );
+  }
+
   useEffect(() => {
     const setUserDocInStateByUserId = async (userId) => {
       const [activeUser] = await getUserByUserId(userId); // from firestore   
@@ -35,5 +43,5 @@ export default function useAuthListener() {
   // returns 
   // authUser: Firebase Authintication user 
   // userDoc: Firestore users document 
-  return { authUser, userDoc, setUserDoc };
+  return { authUser, userDoc, setUserData, setUserFollowing };
 }

@@ -21,7 +21,7 @@ export default function Header({
     }
 }) {
 
-    const { userDoc: loggedInUser } = useContext(UserContext);
+    const { userDoc: loggedInUser, setUserFollowing } = useContext(UserContext);
 
     const [isFollowingProfile, setIsFollowingProfile] = useState(null);
 
@@ -34,7 +34,9 @@ export default function Header({
 
         // Reflecting the changes to the following array of the user in the context scope, 
         // so that both suggestions component and timeline component will be re-rendered  
-        handleToggleFollowAction(loggedInUser, profileDocId, profileUserId, isFollowingProfile);
+        handleToggleFollowAction(
+            loggedInUser.docId, loggedInUser.userId, loggedInUser.following, setUserFollowing, 
+            profileDocId, profileUserId, isFollowingProfile);
     };
 
     useEffect(() => {

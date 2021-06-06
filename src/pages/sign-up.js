@@ -7,7 +7,7 @@ import { doesUsernameExist } from '../services/firebase';
 
 export default function SignUp() {
   const { firebase } = useContext(FirebaseContext);
-  const { setUserDoc } = useContext(UserContext);
+  const { setUserData } = useContext(UserContext);
 
   const history = useHistory();
 
@@ -53,11 +53,11 @@ export default function SignUp() {
           .add(signUpUser)
           .then(function (docRef) {
             // set the new signed up user in the context  
-            setUserDoc({ ...signUpUser, docId: docRef.id });
-          });
+            setUserData({ ...signUpUser, docId: docRef.id });
 
-        // redirect to dashboard  
-        history.push(ROUTES.DASHBOARD);
+            // redirect to dashboard  
+            history.push(ROUTES.DASHBOARD);
+          });
 
       } catch (error) {
         setFullName('');

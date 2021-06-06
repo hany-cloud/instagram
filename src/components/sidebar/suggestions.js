@@ -1,30 +1,32 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Skeleton from 'react-loading-skeleton';
 import { getSuggestedProfilesForUser } from '../../services/firebase';
 import { handleToggleFollowAction } from '../../services/global-app-actions';
 import SuggestedProfile from './suggested-profile';
+import UserContext from '../../context/user';
 
-export default function Suggestions({ loggedInUser, setTimelinePhotos }) {
+export default function Suggestions({ loggedInUserDocId, loggedInUserId, loggedInUserFollowing }) {
+    const { setUserFollowing } = useContext(UserContext);
     const [profiles, setProfiles] = useState(null);
 
     const handleFollowProfile = async (followProfileDocId, followProfileUserId) => {
         const isUnFollowAction = false;
-        handleToggleFollowAction(loggedInUser, followProfileDocId, followProfileUserId, isUnFollowAction);
-
-        setTimelinePhotos();
-    }
+        handleToggleFollowAction(
+            loggedInUserDocId, loggedInUserId, loggedInUserFollowing, setUserFollowing,
+            followProfileDocId, followProfileUserId, isUnFollowAction);
+    };
 
     useEffect(() => {
         const setSuggestedProfilesInState = async () => {
-            if (loggedInUser?.userId) {
-                const response = await getSuggestedProfilesForUser(loggedInUser.userId, loggedInUser.following); // from firestore
+            if (loggedInUserId) {
+                const response = await getSuggestedProfilesForUser(loggedInUserId, loggedInUserFollowing); // from firestore
                 setProfiles(response);
             }
         }
 
         setSuggestedProfilesInState();
-    }, [loggedInUser?.userId, loggedInUser?.following]);
+    }, [loggedInUserId, loggedInUserFollowing]);
 
     return !profiles ? (
         <Skeleton count={1} height={150} className="mt-5" /> //(wait on the profiles as in 'skeleton')
@@ -49,6 +51,7 @@ export default function Suggestions({ loggedInUser, setTimelinePhotos }) {
 }
 
 Suggestions.propTypes = {
-    loggedInUser: PropTypes.object,
-    setTimelinePhotos: PropTypes.func.isRequired
+    loggedInUserDocId: PropTypes.string,
+    loggedInUserId: PropTypes.string,
+    loggedInUserFollowing: PropTypes.array
 };
