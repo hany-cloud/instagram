@@ -105,7 +105,7 @@ Therefore I deleted the use-user hook.
 6. Remove the toggleFollow function from firebase.js in service folder. 
 
 ## To Do List
-	- Make a class for buttons, links, and svg icons(in navbar and actions)
+	- Make a class for buttons (DONE), links, and svg icons(in navbar and actions)
 	const FormInputBase = styled.input`
         ${tw`    
             text-sm 
@@ -121,7 +121,7 @@ Therefore I deleted the use-user hook.
         `}
     `;
     
-	- login and sign up style should be shared
+	- Login and sign up style should be shared (DONE)
 	
 	- Hide the suggestions from burger menu (slide menu) in  case of mobile interface and the profile page is opened
 	- Decide whether I will keep the images in public folder or assets under src folder
