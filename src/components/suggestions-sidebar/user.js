@@ -4,7 +4,7 @@ import Skeleton from 'react-loading-skeleton';
 import PropTypes from 'prop-types';
 
 // Components
-import { UserProfileRoundedImage, ImageScales } from '../userProfileRoundedImage';
+import { UserProfileRoundedImage, ImageScales } from '../user-profile-rounded-image';
 
 export default function User({ username, fullName }) {
   return !username || !fullName ? (

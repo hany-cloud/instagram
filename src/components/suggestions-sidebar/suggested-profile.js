@@ -10,7 +10,7 @@ import styled from "styled-components";
 import tw from "twin.macro";
 
 // Components
-import { UserProfileRoundedImage, ImageScales } from '../userProfileRoundedImage';
+import { UserProfileRoundedImage, ImageScales } from '../user-profile-rounded-image';
 import { TitleBase } from './suggestions.styles';
 import Button, { ButtonTheme } from '../button';
 

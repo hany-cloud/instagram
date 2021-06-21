@@ -16,7 +16,7 @@ import { isUserFollowingProfile } from '../../services/users-service';
 import { handleToggleFollowAction } from '../../services/global-app-actions';
 
 // Components
-import { UserProfileRoundedImage, ImageScales } from '../userProfileRoundedImage';
+import { UserProfileRoundedImage, ImageScales } from '../user-profile-rounded-image';
 import Button, { ButtonTheme } from '../button';
 
 

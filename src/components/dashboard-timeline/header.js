@@ -9,7 +9,7 @@ import tw from "twin.macro";
 import { PostOwnerNameBase } from './post.styles';
 
 // Components
-import { UserProfileRoundedImage, ImageScales } from '../userProfileRoundedImage';
+import { UserProfileRoundedImage, ImageScales } from '../user-profile-rounded-image';
 
 const PostHeaderWrapper = styled.div`
     ${tw` 
