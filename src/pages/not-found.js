@@ -1,17 +1,31 @@
+// Hooks
 import { useEffect } from 'react';
-import Header from '../components/header';
+
+// Styles
+import styled from "styled-components";
+import tw from "twin.macro";
+
+// Components
+import Navbar from "../components/navbar";
+
+
+const NotFoundText = styled.p`
+    ${tw`    
+      text-center 
+      text-2xl
+    `}
+`;
 
 export default function NotFound() {
   useEffect(() => {
+    // set the page title
     document.title = 'Not Found - Instagram';
-  }, []);
+  });
 
   return (
-    <div className="bg-gray-background">
-      <Header />
-      <div className="mx-auto max-w-screen-lg">
-        <p className="text-center text-2xl">Not Found!</p>
-      </div>
-    </div>
+    <>
+      <Navbar />
+      <NotFoundText>Not Found!</NotFoundText>
+    </>
   );
 }

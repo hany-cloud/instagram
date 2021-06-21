@@ -1,7 +1,7 @@
 import {
     updateFollowingForUser,
     updateFollowersForUser
-} from '../services/firebase';
+} from './users-service';
 
 // Handle the follow/unfollow action globally
 //  byUserId: the logged in user id   

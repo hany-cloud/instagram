@@ -1,8 +1,15 @@
+// Hooks
 import { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { getUserByUsername } from '../services/firebase';
-import * as ROUTES from '../constants/routes';
-import Header from '../components/header';
+
+// Services
+import { getUserByUsername } from '../services/users-service';
+
+// Contants
+import { PAGE_ROUTES } from '../constants/routes';
+
+// Components
+import Navbar from "../components/navbar";
 import UserProfile from '../components/profile';
 
 export default function Profile() {
@@ -17,7 +24,7 @@ export default function Profile() {
             if (userRec?.userId) {
                 setUser(userRec);
             } else {
-                history.push(ROUTES.NOT_FOUND); 
+                history.push(PAGE_ROUTES.not_found); 
             }
         }
 
@@ -26,11 +33,9 @@ export default function Profile() {
     }, [usernameParam, history]);
 
     return user ? (
-        <div className="bg-gray-background">
-            <Header />
-            <div className="mx-auto max-w-screen-lg">
-                <UserProfile user={user} />
-            </div>
-        </div>
+        <>
+            <Navbar />
+            <UserProfile user={user} />
+        </>
     ) : null;
 }

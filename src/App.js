@@ -1,11 +1,20 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import * as ROUTES from './constants/routes';
+
+// Hooks
 import useAuthListener from "./hooks/use-auth-listener";
+
+// Context
 import UserContext from './context/user';
+
+// Contants
+import { PAGE_ROUTES } from './constants/routes';
+
+// Helpers
 import ConditionaldRedirectRoute from './helpers/conditional-redirect-route';
 import ProtectedRoute from './helpers/protected-route.js';
 
+// Lazy imports for app pages that are used in routing
 const Login = lazy(() => import('./pages/login'));
 const SignUp = lazy(() => import('./pages/sign-up'));
 const Dashboard = lazy(() => import('./pages/dashboard'));
@@ -25,20 +34,20 @@ function App() {
       <Router>
         <Suspense fallback={<p>Loading ... </p>}>
           <Switch>
-            {/* <Route path={ROUTES.LOGIN} component={Login} /> */}
-            <ConditionaldRedirectRoute 
-              redirectOnCondition={isUserLoggedIn()} redirectPath={ROUTES.DASHBOARD}
-              path={ROUTES.LOGIN} component={Login} /> 
+            {/* <Route path={PAGE_ROUTES.login} component={Login} /> */}
+            <ConditionaldRedirectRoute
+              redirectOnCondition={isUserLoggedIn()} redirectPath={PAGE_ROUTES.dashboard}
+              path={PAGE_ROUTES.login} component={Login} />
 
-            {/* <Route path={ROUTES.SIGN_UP} component={SignUp} /> */}
-            <ConditionaldRedirectRoute 
-              redirectOnCondition={isUserLoggedIn()} redirectPath={ROUTES.DASHBOARD}
-              path={ROUTES.SIGN_UP} component={SignUp} />
-              
-            <Route path={ROUTES.PROFILE} component={Profile} />
+            {/* <Route path={PAGE_ROUTES.sign_up} component={SignUp} /> */}
+            <ConditionaldRedirectRoute
+              redirectOnCondition={isUserLoggedIn()} redirectPath={PAGE_ROUTES.dashboard}
+              path={PAGE_ROUTES.sign_up} component={SignUp} />
 
-            {/* <Route exact path={ROUTES.DASHBOARD} component={Dashboard} /> */}
-            <ProtectedRoute user={authUser} path={ROUTES.DASHBOARD} exact>
+            <Route path={PAGE_ROUTES.profile} component={Profile} />
+
+            {/* <Route exact path={PAGE_ROUTES.dashboard} component={Dashboard} /> */}
+            <ProtectedRoute user={authUser} path={PAGE_ROUTES.dashboard} exact>
               <Dashboard />
             </ProtectedRoute>
 

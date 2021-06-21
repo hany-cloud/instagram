@@ -1,8 +1,24 @@
 import { useReducer, useEffect } from 'react';
+
 import PropTypes from 'prop-types';
+
+// Styles
+import styled from "styled-components";
+import tw from "twin.macro";
+
+// Services 
+import { getUserPhotosByUserId } from '../../services/photos-service';
+
+// Components
 import Header from './header';
 import Photos from './photos';
-import { getUserPhotosByUserId } from '../../services/firebase';
+
+const ProfileWrapper = styled.div` 
+    ${tw`
+        mx-auto 
+        max-w-screen-lg
+    `};
+`;
 
 export default function Profile({ user }) {
     const reducer = (state, newState) => ({ ...state, ...newState });
@@ -29,11 +45,11 @@ export default function Profile({ user }) {
             dispatch({ profile: user, photosCollection: photos, followerCount: user.followers.length });
         }
 
-        getProfileInfoAndPhotos();
+        getProfileInfoAndPhotos(); 
     }, [user.userId]);
 
     return (
-        <>
+        <ProfileWrapper>
             <Header
                 photosCount={photosCollection ? photosCollection.length : 0}
                 followerCount={followerCount}
@@ -41,7 +57,7 @@ export default function Profile({ user }) {
                 profile={profile}             
             />
             <Photos photos={photosCollection} />
-        </>
+        </ProfileWrapper>     
     );
 }
 

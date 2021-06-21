@@ -1,7 +1,145 @@
+// Hooks
 import { useContext, useEffect, useState } from "react";
+
 import { Link, useHistory } from "react-router-dom";
+
+// Styles
+import styled, { css } from "styled-components";
+import tw from "twin.macro";
+
+// Context
 import FirebaseContext from "../context/firebase";
-import * as ROUTES from '../constants/routes';
+
+// Contants
+import { PAGE_ROUTES } from '../constants/routes';
+
+const ContentWrapper = styled.div`
+    ${tw` 
+        flex 
+        items-center 
+        justify-center  
+        content-center
+            
+        mx-auto  
+
+        pr-3
+
+        max-w-screen-md 
+        h-screen    
+    `}
+`;
+
+const SideImageWrapper = styled.div`
+    ${tw` 
+        w-3/5       
+    `}
+`;
+
+const FormWrapper = styled.div`
+    ${tw` 
+        w-2/5     
+    `}
+`;
+
+const SectionFormWrapper = styled.div`
+    ${tw`    
+        flex 
+
+        flex-col
+        items-center 
+        justify-center 
+        
+        w-full 
+        
+        bg-white 
+        
+        p-4 
+        
+        border border-gray-primary  
+
+        rounded 
+        
+        mb-4
+    `}
+`;
+const TopSectionFormWrapper = styled(SectionFormWrapper)``;
+const TopSectionFormImage = styled.div`
+    ${tw`    
+        flex 
+        justify-center 
+        w-full
+    `}
+
+    & > img {
+        ${tw`
+            mt-2
+            w-6/12 
+            mb-4
+        `};
+      }
+`;
+
+const BottomSectionFormWrapper = styled(SectionFormWrapper)``;
+
+const BottomSectionFormText = styled.p`
+    ${tw`    
+        text-sm
+    `}
+
+    & > a {
+        ${tw`    
+            font-bold 
+            text-blue-medium
+        `}  
+    }
+`;
+  
+
+const FormError = styled.p`
+    ${tw`    
+        mb-4 
+        text-xs 
+        text-red-primary
+    `}    
+`;
+
+const FormInput = styled.input`
+    ${tw`    
+        text-sm 
+        text-gray-base 
+
+        w-full 
+
+        mr-3 
+        mb-2
+
+        py-5 
+        px-4 
+
+        h-2 
+        border border-gray-primary 
+        rounded         
+    `}
+`;
+
+const FormButton = styled.button`
+    ${tw`    
+        bg-blue-medium 
+        text-white 
+        w-full 
+        rounded 
+        h-8 
+        font-bold         
+    `};
+
+    ${({ isInvalid }) =>
+        isInvalid &&
+        css`
+        ${tw`
+            opacity-50
+        `};
+    `};
+`;
 
 export default function Login() {
     const history = useHistory();
@@ -18,7 +156,7 @@ export default function Login() {
 
         try {
             await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
-            history.push(ROUTES.DASHBOARD);
+            history.push(PAGE_ROUTES.dashboard);
         } catch (error) {
             setEmailAddress('');
             setPassword('');
@@ -27,59 +165,58 @@ export default function Login() {
     };
 
     useEffect(() => {
+        // set the page title
         document.title = 'Login - Instagram';
     }, []);
 
     return (
-        <div className="container flex mx-auto max-w-screen-md items-center h-screen">
-            <div className="flex w-3/5">
+        <ContentWrapper>
+            <SideImageWrapper>
                 <img src="/images/iphone-with-profile.jpg" alt="iPhone with Instagram app" />
-            </div>
-            <div className="flex flex-col w-2/5">
-                <div className="flex flex-col items-center bg-white p-4 border border-gray-primary mb-4 rounded">
-                    <h1 className="flex justify-center w-full">
-                        <img src="/images/logo.png" alt="Instagram" className="mt-2 w-6/12 mb-4" />
-                    </h1>
+            </SideImageWrapper>
+            <FormWrapper>
+                <TopSectionFormWrapper>
+                    <TopSectionFormImage>
+                        <img src="/images/logo.png" alt="Instagram" />
+                    </TopSectionFormImage>
 
-                    {error && <p className="mb-4 text-xs text-red-primary">{error}</p>}
+                    {error && <FormError>{error}</FormError>}
 
                     <form onSubmit={handleLogin} method="POST">
-                        <input
+                        <FormInput
                             aria-label="Enter your email address"
                             type="text"
                             autoComplete="username"
-                            placeholder="Email address"
-                            className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2"
+                            placeholder="Email address"                            
                             onChange={({ target }) => setEmailAddress(target.value)}
                             value={emailAddress}
                         />
-                        <input
+                        <FormInput
                             aria-label="Enter your password"
                             type="password"
                             autoComplete="current-password"
-                            placeholder="Password"
-                            className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2"
+                            placeholder="Password"                           
                             onChange={({ target }) => setPassword(target.value)}
                             value={password}
                         />
-                        <button
+                        <FormButton
                             disabled={isInvalid}
                             type="submit"
-                            className={`bg-blue-medium text-white w-full rounded h-8 font-bold ${isInvalid && 'opacity-50'}`}
+                            isInvalid={isInvalid}
                         >
                             Login
-                        </button>
+                        </FormButton>
                     </form>
-                </div>
-                <div className="flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary">
-                    <p className="text-sm">
+                </TopSectionFormWrapper>
+                <BottomSectionFormWrapper>
+                    <BottomSectionFormText>
                         Don't have an account?{` `}
-                        <Link to={ROUTES.SIGN_UP} className="font-bold text-blue-medium">
+                        <Link to={PAGE_ROUTES.sign_up}>
                             Sign up
                         </Link>
-                    </p>
-                </div>
-            </div>
-        </div>
+                    </BottomSectionFormText>
+                </BottomSectionFormWrapper>
+            </FormWrapper>
+        </ContentWrapper>
     );
 }

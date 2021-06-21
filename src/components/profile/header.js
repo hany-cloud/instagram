@@ -1,11 +1,96 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import { useState, useEffect, useContext } from 'react';
-import PropTypes from 'prop-types';
 import Skeleton from 'react-loading-skeleton';
-import { isUserFollowingProfile } from '../../services/firebase';
-import { handleToggleFollowAction } from '../../services/global-app-actions';
-import { DEFAULT_IMAGE_PATH } from '../../constants/paths';
+
+import PropTypes from 'prop-types';
+
+// Styles
+import styled from "styled-components";
+import tw from "twin.macro";
+
+// Contexts
 import UserContext from '../../context/user';
+
+// Services
+import { isUserFollowingProfile } from '../../services/users-service';
+import { handleToggleFollowAction } from '../../services/global-app-actions';
+
+// Components
+import { UserProfileRoundedImage, ImageScales } from '../userProfileRoundedImage';
+import Button, { ButtonTheme } from '../button';
+
+
+const HeaderWrapper = styled.div` 
+    ${tw`
+        container
+        grid 
+        grid-cols-2 md:grid-cols-3 
+        justify-items-center
+        place-content-center
+    `};
+`;
+
+const HeaderInfoWrapper = styled.div` 
+    ${tw`
+        flex         
+        items-center 
+        justify-center 
+        flex-col 
+        col-span-2  
+        p-3  
+    `};
+`;
+
+const InfoFollowToggleWrapper = styled.div` 
+    ${tw`
+        container 
+        flex  
+        flex-wrap       
+        items-center  
+    `};
+
+    & > p {
+        ${tw`
+            text-lg
+            md: text-2xl 
+            mr-4
+        `};
+      }
+`;
+
+const InfoUserActivityWrapper = styled.div` 
+    ${tw`
+        container 
+        flex 
+        flex-wrap
+        mt-4
+    `};
+
+    & > p {
+        ${tw`
+            mr-10
+        `};
+      }
+
+      & > p > span {
+        ${tw`
+            font-bold
+        `};
+      }  
+`;
+
+const InfoUserfullNameWrapper = styled.div` 
+    ${tw`
+        container 
+        mt-4
+    `};
+    
+    & > p {
+        ${tw`
+            font-medium
+        `};
+      }  
+`;
 
 export default function Header({
     photosCount,
@@ -51,67 +136,58 @@ export default function Header({
     }, [profileUserId, loggedInUser?.userId]);
 
     return (
-        <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
-            <div className="container flex justify-center items-center">
-                {profileUsername ? (
-                    <img
-                        className="rounded-full h-40 w-40 flex"
-                        alt={`${fullName} profile picture`}
-                        src={`/images/avatars/${profileUsername}.jpg`}
-                        onError={(e) => {
-                            e.target.src = DEFAULT_IMAGE_PATH;
-                        }}
-                    />
+        <HeaderWrapper>
+            <>
+                {profileUsername ? (                   
+                    <UserProfileRoundedImage username={profileUsername} maxWidth={ImageScales.lg} />
                 ) : (
                     <Skeleton circle height={150} width={150} count={1} />
                 )}
-            </div>
-            <div className="flex items-center justify-center flex-col col-span-2">
-                <div className="container flex items-center">
-                    <p className="text-2xl mr-4">{profileUsername}</p>
+            </>
+            <HeaderInfoWrapper>
+                <InfoFollowToggleWrapper>
+                    <p>{profileUsername}</p>
                     {activeBtnFollow && isFollowingProfile === null ? (
                         <Skeleton count={1} width={80} height={32} />
                     ) : (
-                        activeBtnFollow && (
-                            <button
-                                className="bg-blue-medium font-bold text-sm rounded text-white w-20 h-8"
+                        activeBtnFollow && (                           
+                            <Button theme={ButtonTheme.filled} 
                                 type="button"
+                                text={isFollowingProfile ? 'Unfollow' : 'Follow'} 
                                 onClick={handleToggleFollow}
                                 onKeyDown={(event) => {
                                     if (event.key === 'Enter') {
                                         handleToggleFollow();
                                     }
                                 }}
-                            >
-                                {isFollowingProfile ? 'Unfollow' : 'Follow'}
-                            </button>
+                            />
                         )
                     )}
-                </div>
-                <div className="container flex mt-4">
+                </InfoFollowToggleWrapper>
+                <InfoUserActivityWrapper>
                     {!followers || !following ? (
                         <Skeleton count={1} width={677} height={24} />
                     ) : (
                         <>
-                            <p className="mr-10">
-                                <span className="font-bold">{photosCount}</span> photos
-                                </p>
-                            <p className="mr-10">
-                                <span className="font-bold">{followerCount}</span>
+                            <p>
+                                <span>{photosCount}</span> photos
+                            </p>
+                            <p>
+                                <span>{followerCount}</span>
                                 {` `}
                                 {followerCount === 1 ? `follower` : `followers`}
                             </p>
-                            <p className="mr-10">
-                                <span className="font-bold">{following?.length}</span> following
-                                </p>
+                            <p>
+                                <span>{following?.length}</span> following
+                            </p>
                         </>
                     )}
-                </div>
-                <div className="container mt-4">
-                    <p className="font-medium">{!fullName ? <Skeleton count={1} height={24} /> : fullName}</p>
-                </div>
-            </div>
-        </div>
+                </InfoUserActivityWrapper>
+                <InfoUserfullNameWrapper>
+                    <p>{!fullName ? <Skeleton count={1} height={24} /> : fullName}</p>
+                </InfoUserfullNameWrapper>
+            </HeaderInfoWrapper>
+        </HeaderWrapper>
     );
 }
 

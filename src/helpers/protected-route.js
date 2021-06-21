@@ -1,7 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
-import * as ROUTES from '../constants/routes';
+
+import PropTypes from 'prop-types';
+
+// Contants
+import { PAGE_ROUTES } from '../constants/routes';
 
 export default function ProtectedRoute({ user, children, ...rest }) {    
     return (
@@ -16,7 +19,7 @@ export default function ProtectedRoute({ user, children, ...rest }) {
                     return (
                         <Redirect
                             to={{
-                                pathname: ROUTES.LOGIN,
+                                pathname: PAGE_ROUTES.login,
                                 state: { from: location }
                             }}
                         />

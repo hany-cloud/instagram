@@ -1,5 +1,8 @@
-export const DASHBOARD = '/';
-export const LOGIN = '/login';
-export const SIGN_UP = '/sign-up';
-export const PROFILE = '/p/:username';
-export const NOT_FOUND = '/not-found';
+export const PAGE_ROUTES = {
+    dashboard: '/',
+    login: '/login',
+    sign_up: '/sign-up',
+    profile: '/p/:username',
+    not_found: '/not-found'
+};
+

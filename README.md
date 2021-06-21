@@ -104,4 +104,24 @@ Therefore I deleted the use-user hook.
 5. Adding global-app-actions.js inside services folder to hold all common actions that could be shred beteween multiple componenets.
 6. Remove the toggleFollow function from firebase.js in service folder. 
 
+## To Do List
+	- Make a class for buttons, links, and svg icons(in navbar and actions)
+	const FormInputBase = styled.input`
+        ${tw`    
+            text-sm 
+            text-gray-base 
 
+            w-full 
+
+            mr-3 
+            mb-2
+
+            py-5 
+            px-4        
+        `}
+    `;
+    
+	- login and sign up style should be shared
+	
+	- Hide the suggestions from burger menu (slide menu) in  case of mobile interface and the profile page is opened
+	- Decide whether I will keep the images in public folder or assets under src folder
