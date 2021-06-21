@@ -34,6 +34,12 @@ const UserProfileTitle = styled(TitleBase)`
   `};
 `;
 
+const XsmallButton = styled(Button)`
+    ${tw`
+        text-xs
+    `};
+`;
+
 export default function SuggestedProfile({
   profileDocId,
   profileUserId,
@@ -63,8 +69,8 @@ export default function SuggestedProfile({
         </div>
       </SuggestionsProfileWrapper>
       <div>     
-        <Button theme={ButtonTheme.link} text="Follow" type="button"
-          onClick={handleFollow} xsmall/>
+        <XsmallButton theme={ButtonTheme.link} text="Follow" type="button"
+          onClick={handleFollow} />
       </div>
     </SuggestionsLineWrapper>
   ) : null;

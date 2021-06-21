@@ -3,10 +3,6 @@ import { useState, useContext, useEffect } from 'react';
 
 import { Link, useHistory } from 'react-router-dom';
 
-// Styles
-import styled, { css } from "styled-components";
-import tw from "twin.macro";
-
 // Context
 import FirebaseContext from '../context/firebase';
 import UserContext from '../context/user';
@@ -17,133 +13,18 @@ import { PAGE_ROUTES } from '../constants/routes';
 // Services
 import { doesUsernameExist } from '../services/users-service';
 
-const ContentWrapper = styled.div`
-    ${tw` 
-        flex 
-        items-center 
-        justify-center  
-        content-center
-            
-        mx-auto  
-
-        pr-3
-
-        max-w-screen-md 
-        h-screen    
-    `}
-`;
-
-const SideImageWrapper = styled.div`
-    ${tw` 
-        w-3/5       
-    `}
-`;
-
-const FormWrapper = styled.div`
-    ${tw` 
-        w-2/5     
-    `}
-`;
-
-const SectionFormWrapper = styled.div`
-    ${tw`    
-        flex 
-
-        flex-col
-        items-center 
-        justify-center 
-        
-        w-full 
-        
-        bg-white 
-        
-        p-4 
-        
-        border border-gray-primary  
-
-        rounded 
-        
-        mb-4
-    `}
-`;
-const TopSectionFormWrapper = styled(SectionFormWrapper)``;
-const TopSectionFormImage = styled.div`
-    ${tw`    
-        flex 
-        justify-center 
-        w-full
-    `}
-
-    & > img {
-        ${tw`
-            mt-2
-            w-6/12 
-            mb-4
-        `};
-      }
-`;
-
-const BottomSectionFormWrapper = styled(SectionFormWrapper)``;
-
-const BottomSectionFormText = styled.p`
-    ${tw`    
-        text-sm
-    `}
-
-    & > a {
-        ${tw`    
-            font-bold 
-            text-blue-medium
-        `}  
-    }
-`;
-
-
-const FormError = styled.p`
-    ${tw`    
-        mb-4 
-        text-xs 
-        text-red-primary
-    `}    
-`;
-
-const FormInput = styled.input`
-    ${tw`    
-        text-sm 
-        text-gray-base 
-
-        w-full 
-
-        mr-3 
-        mb-2
-
-        py-5 
-        px-4 
-
-        h-2 
-        border border-gray-primary 
-        rounded         
-    `}
-`;
-
-const FormButton = styled.button`
-    ${tw`    
-        bg-blue-medium 
-        text-white 
-        w-full 
-        rounded 
-        h-8 
-        font-bold         
-    `};
-
-    ${({ isInvalid }) =>
-    isInvalid &&
-    css`
-        ${tw`
-            opacity-50
-        `};
-    `};
-`;
+// Components
+import { ButtonTheme } from "../components/button";
+import { ContentWrapper, 
+    SideImageWrapper,
+    FormWrapper,
+    TopSectionFormWrapper,
+    TopSectionFormImage,
+    BottomSectionFormWrapper,
+    BottomSectionFormText,
+    FormError,
+    FormInput,
+    FormButton} from "./forms.styles";
 
 export default function SignUp() {
   const { firebase } = useContext(FirebaseContext);
@@ -265,9 +146,9 @@ export default function SignUp() {
               disabled={isInvalid}
               type="submit"
               isInvalid={isInvalid}
-            >
-              Sign Up
-            </FormButton>
+              theme={ButtonTheme.filled}
+                            text="Sign Up"
+            />
           </form>
         </TopSectionFormWrapper>
         <BottomSectionFormWrapper>

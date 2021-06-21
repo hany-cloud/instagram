@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 // Styles
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import tw from "twin.macro";
 
 const BaseButton = styled.button`
@@ -12,15 +12,6 @@ const BaseButton = styled.button`
         p-2
         
         rounded
-    `};
-
-    ${({ xsmall }) =>
-        xsmall &&
-        css`
-        ${tw`
-            text-xs
-        `}; 
-        
     `};
 `;
 
@@ -43,15 +34,15 @@ export const ButtonTheme = {
 
 }
 
-export default function Button({ theme, text, className, onClick, onKeyDown, type, xsmall }) {    
+export default function Button({ theme, text, className, onClick, onKeyDown, type, disabled }) {    
     if (theme === ButtonTheme.filled)
         return <FilledButton className={className} 
                     onClick={onClick} onKeyDown={onKeyDown} 
-                    type={type} xsmall={xsmall}>{text}</FilledButton>;
+                    type={type} disabled={disabled}>{text}</FilledButton>;
 
     else return <LinkButton className={className} 
                     onClick={onClick} onKeyDown={onKeyDown} 
-                    type={type} xsmall={xsmall}>{text}</LinkButton>;
+                    type={type} disabled={disabled}>{text}</LinkButton>;
 }
 
 Button.propTypes = {
@@ -60,5 +51,6 @@ Button.propTypes = {
     className: PropTypes.string,
     onClick: PropTypes.func,
     onKeyDown: PropTypes.func, 
-    type: PropTypes.string
+    type: PropTypes.string,
+    disabled: PropTypes.bool
 };
