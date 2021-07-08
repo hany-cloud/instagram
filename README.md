@@ -103,6 +103,7 @@ Therefore I deleted the use-user hook.
 4. Rename the returned values from use-auth-listener inside hooks folder. 
 5. Adding global-app-actions.js inside services folder to hold all common actions that could be shred beteween multiple componenets.
 6. Remove the toggleFollow function from firebase.js in service folder. 
+7. Applying Styled components with Tailwind CSS in the whole project
 
 ## To Do List
 	- Make a class for buttons (DONE), links, and svg icons(in navbar and actions)
